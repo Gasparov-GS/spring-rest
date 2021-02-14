@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <table border="1">
+        <tr>
+            <th th:width="100">id</th>
+            <th>name</th>
+            <th>E_mail</th>
+            <th>password</th>
+            <th>Actions</th>
+        </tr>
+
+        <tr th:each="userlist, state : ${forms}"
+            class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+
+            <td th:utext="${userlist.id}">id</td>
+            <td th:utext="${userlist.name}">name</td>
+            <td th:utext="${userlist.mail}">E_mail</td>
+            <td th:utext="${userlist.password}">password</td>
+            <td >
+                <form th:action="@{/admin/delete}" th:method="post">
+                    <input type="hidden" name="id" th:value="${userlist.id}" />
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
+                <form th:action="@{/admin/update/{id}(id=${userlist.id})}" th:method="get">
+                    <input type="hidden" name="id" th:value="${userlist.id}" />
+                    <input type="submit" value="Update" class="btn btn-danger" />
+                </form>
+
+            </td>
+        </tr>
+    </table>
+    <form >
+        <a th:href="@{/admin/addUser}">Add User</a>
+    </form>
+    <a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</div>
+</body>
+</html>

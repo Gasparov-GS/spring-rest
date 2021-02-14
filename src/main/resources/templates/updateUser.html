@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handing Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<h1>Form</h1>
+<form action="#"
+      th:action="@{/admin/update/{id}(id=${user.id})}"
+      th:object="${user}"
+      method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <label for="email">Email</label>
+    <input type="text" th:field="*{mail}" id="email" placeholder="Email">
+    <label for="pass">Password</label>
+    <input type="text" th:field="*{password}" id="pass" placeholder="Password">
+    <form>
+        <select name="a">
+            <option hidden>Set role</option>
+            <option value="ROLE_ADMIN">Admin</option>
+            <option value="ROLE_USER">User</option>
+        </select>
+        <select name="a">
+            <option hidden>Set role</option>
+            <option value="ROLE_ADMIN">Admin</option>
+            <option value="ROLE_USER">User</option>
+            <br>
+            <input type="submit" value="Update"/>
+        </select>
+    </form>
+</form>
+    <br>
+
+
+</form>
+
+<a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
+<form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+    <input hidden type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
