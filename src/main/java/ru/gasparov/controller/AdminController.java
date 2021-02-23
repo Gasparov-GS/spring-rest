@@ -67,12 +67,16 @@ public class AdminController {
                              @RequestParam("id") int id,
                              @RequestParam("pass") String pass,
                              @RequestParam("a") String[] values) {
+
+        User userDB = userService.findUserById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         user.setId(id);
         user.setName(name);
         user.setLastName(lastName);
         user.setAge(age);
         user.setMail(mail);
-        user.setPassword(new BCryptPasswordEncoder().encode(pass));
+        log.info(pass);
+        user.setPassword(!"".equals(pass) ? new BCryptPasswordEncoder().encode(pass) : userDB.getPassword());
         log.info(Arrays.toString(values));
         user.setRoles(UtilService.valuesToSetRole(values));
         userService.addUser(user);
