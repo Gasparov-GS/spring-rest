@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringJoiner;
 
 
 @Entity
@@ -19,6 +20,12 @@ public class User implements UserDetails {
 
     @Column(name = "user_name")
     private String name;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "age")
+    private int age;
 
     @Column(name = "email")
     private String mail;
@@ -110,6 +117,31 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String toStringPrincipal() {
+        StringJoiner roles = new StringJoiner(", ");
+        getRoles().forEach(x->roles.add(x.getRole().split("_")[1]));
+        return getMail() + " " + "with roles " + roles.toString();
+    }
+
+    public String toStringRole() {
+        StringJoiner roles = new StringJoiner(", ");
+        getRoles().forEach(x->roles.add(x.getRole().split("_")[1]));
+        return roles.toString();
+    }
 }

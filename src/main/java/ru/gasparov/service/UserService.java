@@ -1,7 +1,5 @@
 package ru.gasparov.service;
 
-
-
 import ru.gasparov.model.User;
 
 import java.util.List;
@@ -14,5 +12,4 @@ public interface UserService {
     List<User> allUser();
     Optional<User> findUserById(int id);
     Optional<User> findUserByName(String username);
-
 }

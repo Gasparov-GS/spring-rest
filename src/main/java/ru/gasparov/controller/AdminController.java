@@ -4,12 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.gasparov.model.User;
 import ru.gasparov.service.UserService;
 import ru.gasparov.service.UtilService;
 
+import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -23,9 +24,9 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin")
-    public String userList(ModelMap modelMap) {
+    public String userList(Model model) {
         List<User> userList = userService.allUser();
-        modelMap.addAttribute("forms", userList);
+        model.addAttribute("forms", userList);
         return "index";
     }
 
@@ -50,17 +51,32 @@ public class AdminController {
     }
 
     @GetMapping("/admin/update/{id}")
-    public String updateForm(@PathVariable("id") int id, Model model) {
+    public void updateForm(@PathVariable("id") int id, Model model) {
         User user = userService.findUserById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         model.addAttribute("user", user);
-        return "updateUser";
+        log.info("work update get");
     }
 
     @PostMapping("/admin/update/{id}")
-    public String updateUser(User user, @RequestParam("a") String[] values) {
+    public String updateUser(@Valid @ModelAttribute("user")User user,
+                             @RequestParam("name") String name,
+                             @RequestParam("lastName") String lastName,
+                             @RequestParam("age") int age,
+                             @RequestParam("mail") String mail,
+                             @RequestParam("id") int id,
+                             @RequestParam("pass") String pass,
+                             @RequestParam("a") String[] values) {
+        user.setId(id);
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setMail(mail);
+        user.setPassword(new BCryptPasswordEncoder().encode(pass));
+        log.info(Arrays.toString(values));
         user.setRoles(UtilService.valuesToSetRole(values));
         userService.addUser(user);
+        log.info("work update controller");
         return "redirect:/admin";
     }
 
