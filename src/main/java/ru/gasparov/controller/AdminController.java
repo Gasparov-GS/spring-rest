@@ -1,6 +1,7 @@
 package ru.gasparov.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 public class AdminController {
 
     private final UserService userService;
@@ -23,72 +24,34 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/admin")
-    public String userList(Model model) {
-        List<User> userList = userService.allUser();
-        model.addAttribute("forms", userList);
-        return "index";
+    @GetMapping(value = "/api/users")
+    public List<User> userList() {
+        return userService.allUser();
     }
 
-    @PostMapping("/admin/delete")
-    private String deleteUser(@RequestParam("id") int id) {
+    @GetMapping(value = "/admin/users/{id}")
+    public User getUser(@PathVariable int id) {
+        return userService.findUserById(id).get();
+    }
+
+    @DeleteMapping(value = "/api/deleteUser/{id}")
+    private void deleteUser(@PathVariable int id) {
         userService.removeUser(id);
-        return "redirect:/admin";
+        log.info("[REST.DELETE]/api/deleteUser with id: " + id);
     }
 
-    @GetMapping("/admin/addUser")
-    private String userForm(Model model) {
-        model.addAttribute("user", new User());
-        return "add";
-    }
 
-    @PostMapping("/admin/addUser")
-    private String addUser(@ModelAttribute User user, @RequestParam("a") String[] values) {
-        user.setRoles(UtilService.valuesToSetRole(values));
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    @PostMapping(value = "/api/addUser")
+    private ResponseEntity<User> addUser(@RequestBody User user) {
         userService.addUser(user);
-        return "redirect:/admin";
+        log.info("[REST.POST]/api/addUser " + user.toString());
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/admin/update/{id}")
-    public void updateForm(@PathVariable("id") int id, Model model) {
-        User user = userService.findUserById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("user", user);
-        log.info("work update get");
-    }
-
-    @PostMapping("/admin/update/{id}")
-    public String updateUser(@Valid @ModelAttribute("user")User user,
-                             @RequestParam("name") String name,
-                             @RequestParam("lastName") String lastName,
-                             @RequestParam("age") int age,
-                             @RequestParam("mail") String mail,
-                             @RequestParam("id") int id,
-                             @RequestParam("pass") String pass,
-                             @RequestParam("a") String[] values) {
-
-        User userDB = userService.findUserById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        user.setId(id);
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setAge(age);
-        user.setMail(mail);
-        log.info(pass);
-        user.setPassword(!"".equals(pass) ? new BCryptPasswordEncoder().encode(pass) : userDB.getPassword());
-        log.info(Arrays.toString(values));
-        user.setRoles(UtilService.valuesToSetRole(values));
+    @PatchMapping(value = "/api/editUser")
+    public void updateUser(@RequestBody User user) {
         userService.addUser(user);
-        log.info("work update controller");
-        return "redirect:/admin";
+        log.info("[REST.PATCH]/api/editUser " + user.toString());
     }
 
-    @GetMapping("/admin/addRole/{id}")
-    public String updateFormForRole(@PathVariable("id") int id, Model model) {
-        User user = userService.findUserById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("user", user);
-        return "updateUser";
-    }
 }

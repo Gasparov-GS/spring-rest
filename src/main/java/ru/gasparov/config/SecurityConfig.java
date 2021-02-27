@@ -39,13 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and().csrf().disable();
 
-        http
-                .authorizeRequests()
-                .antMatchers("/login").anonymous()
-                .antMatchers("/hello").hasAnyRole("USER","ADMIN")
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admin/**").hasAnyRole( "ADMIN")
-                .anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
+
+
+//                .authorizeRequests()
+//                .antMatchers("/login").anonymous()
+//                .antMatchers("/hello").hasAnyRole("USER","ADMIN")
+//                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+//                .antMatchers("/admin/**").hasAnyRole( "ADMIN");
+//                .anyRequest().authenticated(); потом нада расскоментировать!!!!!
     }
 
     @Bean

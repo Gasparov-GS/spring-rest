@@ -12,6 +12,6 @@ public class UserController {
 
     @GetMapping("/user")
     public String userPage() {
-        return "hello";
+        return "index";
     }
 }

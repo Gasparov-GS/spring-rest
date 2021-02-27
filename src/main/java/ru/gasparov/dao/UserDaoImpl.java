@@ -1,5 +1,6 @@
 package ru.gasparov.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.gasparov.model.Role;
 import ru.gasparov.model.User;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -18,6 +20,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void addUser(User user) {
         entityManager.merge(user);
+        log.warn(user.toString());
     }
 
     @Override

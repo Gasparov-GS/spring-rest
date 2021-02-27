@@ -1,5 +1,6 @@
 package ru.gasparov.model;
 
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringJoiner;
 
-
+@ToString
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
