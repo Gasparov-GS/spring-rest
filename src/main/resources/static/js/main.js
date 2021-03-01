@@ -11,8 +11,16 @@ fetch("http://localhost:8080/api/users", {
     res.json().then(t => {
         console.log(t);
         let table = document.getElementById('example');
+
     t.forEach((object) => {
+        let idForModal = "";
+        idForModal++;
         let roles = '';
+        let buttonEdit = "<button id=\"editUser\" onclick=\"updateUser("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\" data-toggle=\"modal\" data-target=\"#myModal\"" +
+            " >Edit</button>";
+        let buttonDelete = "<button type=\"button\" class=\"btn btn-danger btn-lg\" data-toggle=\"modal\"" +
+            " onclick='del'>Edit</button>"
+
         object.roles.forEach((value)=> {
             roles += '<span>';
             roles += value.role.replaceAll('ROLE_', '');
@@ -25,28 +33,36 @@ fetch("http://localhost:8080/api/users", {
             '<td>' + object.lastName + '</td>' +
             '<td>' + object.age + '</td>' +
             '<td>' + object.mail + '</td>' +
-            '<td>' + roles + '</td>';
-
-
+            '<td>' + roles + '</td>' +
+            '<td>' + buttonEdit + '</td>' +
+            '<td>' + buttonDelete + '</td>';
         table.appendChild(tr);
+
+
+
+
     })
     })
 });
 
+    function updateUser(id) {
 
-// const res = fetch('http://localhost:8080/api/users');
+        document.getElementById('id').value = id;
 
-// const data = JSON.parse(res);
-// function append_json_data() {
-//     let table = document.getElementById('example');
-//     promise.forEach((object) => {
-//         let tr = document.createElement('tr');
-//         tr.innerHTML = '<td>' + object.id + '</td>' +
-//             '<td>' + object.name + '</td>' +
-//             '<td>' + object.lastName + '</td>' +
-//             '<td>' + object.age + '</td>';
-//         '<td>' + object.mail + '</td>';
-//         table.appendChild(tr);
-//     });
+
+        // let form = document.getElementById('formEdit')
+        //
+        //
+        // let label = document.createElement('label');
+        // label.innerHTML = '<label for="id">' + "ID" + '</label>';
+        //
+        // let input = document.createElement('input');
+        // input.innerHTML = '<input class="form-control card-form" type="text" name="id" th:value=""  id="id" readonly>'
+        //
+        //
+        // form.appendChild(label);
+        // form.appendChild(input);
+    }
+
 
 

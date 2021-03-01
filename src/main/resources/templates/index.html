@@ -68,18 +68,51 @@
                         </tr>
                     </thead>
                     <tbody>
-<!--                        <tr >-->
-<!--                            <th></th>-->
-<!--                            <td></td>-->
-<!--                            <td></td>-->
-<!--                            <td>Age</td>-->
-<!--                            <td>Email</td>-->
-<!--                            <td>Role</td>-->
-<!--                            <td>-->
-<!--                                <button type="button" class="btn btn-info btn-lg"-->
-<!--                                        data-toggle="modal" data-target="#myModal">-->
-<!--                                    Edit </button>-->
-<!--                                <div class="modal fade" id="myModal" role="dialog" th:attrappend="id=${userlist.id}">-->
+                    <div class="modal fade" id="myModal" role="dialog" >
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <p>Edit user</p>
+                                    <button type="button" class="close" data-dismiss="modal">x</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row justify-content-center align-items-center">
+                                        <form class="text-center" action="#"  method="post">
+                                            <label for="id">Id</label>
+                                            <input class="form-control card-form" type="text" name="id"   id="id" readonly>
+                                            <label for="name">First name</label>
+                                            <input class="form-control alert-warning" type="text" name="name" id="name">
+                                            <label  for="lastName">Last name</label>
+                                            <input class="form-control alert-warning" type="text" name="lastName"  id="lastName">
+                                            <label for="age">Age</label>
+                                            <input class="form-control" type="text" name="age"  id="age">
+                                            <label for="mail">Email</label>
+                                            <input class="form-control alert-warning" type="text" name="mail"   id="mail">
+                                            <label for="pass">Password</label>
+                                            <input class="form-control" type="text" name="pass" id="pass">
+                                            <div class="pb-2">
+                                            </div>
+                                            <div class="form-group">
+                                                <select name="a" multiple size="2" class="form-control" >
+                                                    <option value="ROLE_ADMIN">Admin</option>
+                                                    <option value="ROLE_USER">User</option>
+                                                </select>
+                                            </div>
+                                            <div class="text-right">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+<!--                    <div class="modal fade" id="myModal" role="dialog">-->
 <!--                                    <div class="modal-dialog">-->
 <!--                                        <div class="modal-content">-->
 <!--                                            <div class="modal-header">-->
@@ -88,17 +121,17 @@
 <!--                                            </div>-->
 <!--                                            <div class="modal-body">-->
 <!--                                                <div class="row justify-content-center align-items-center">-->
-<!--                                                    <form class="text-center" action="#" th:action="@{/admin/update/{id}(id=${userlist.id})}" method="post">-->
+<!--                                                    <form id="formEdit" class="text-center" action="#"  >-->
 <!--                                                        <label for="id">Id</label>-->
-<!--                                                        <input class="form-control card-form" type="text" name="id" th:value="${userlist.id}"  id="id" readonly>-->
+<!--                                                        <input class="form-control card-form" type="text" name="id"  id="id" readonly>-->
 <!--                                                        <label for="name">First name</label>-->
-<!--                                                        <input class="form-control alert-warning" type="text" name="name" th:value="${userlist.name}"  id="name">-->
+<!--                                                        <input class="form-control alert-warning" type="text" name="name"   id="name">-->
 <!--                                                        <label  for="lastName">Last name</label>-->
-<!--                                                        <input class="form-control alert-warning" type="text" name="lastName" th:value="${userlist.lastName}"  id="lastName">-->
+<!--                                                        <input class="form-control alert-warning" type="text" name="lastName"   id="lastName">-->
 <!--                                                        <label for="age">Age</label>-->
-<!--                                                        <input class="form-control" type="text" name="age" th:value="${userlist.age}"  id="age">-->
+<!--                                                        <input class="form-control" type="text" name="age"   id="age">-->
 <!--                                                        <label for="mail">Email</label>-->
-<!--                                                        <input class="form-control alert-warning" type="text" name="mail" th:value="${userlist.mail}"  id="mail">-->
+<!--                                                        <input class="form-control alert-warning" type="text" name="mail"   id="mail">-->
 <!--                                                        <label for="pass">Password</label>-->
 <!--                                                        <input class="form-control" type="text" name="pass" id="pass">-->
 <!--                                                        <div class="pb-2">-->
@@ -115,17 +148,13 @@
 <!--                                                        </div>-->
 <!--                                                    </form>-->
 <!--                                                </div>-->
+<!--                                                </div>-->
 <!--                                            </div>-->
 <!--                                        </div>-->
 <!--                                    </div>-->
 <!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td>-->
-<!--                                <button type="button" class="btn btn-danger btn-lg"-->
-<!--                                        data-toggle="modal" data-target="#myModal2"-->
-<!--                                        th:attrappend="data-target=${userlist.id}" >-->
-<!--                                    Delete </button>-->
-<!--                                <div class="modal fade" id="myModal2" role="dialog" th:attrappend="id=${userlist.id}">-->
+
+<!--                                <div class="modal fade" id="myModal2" role="dialog">-->
 <!--                                    <div class="modal-dialog">-->
 <!--                                        <div class="modal-content">-->
 <!--                                            <div class="modal-header">-->
@@ -134,17 +163,17 @@
 <!--                                            </div>-->
 <!--                                            <div class="modal-body">-->
 <!--                                                <div class="row justify-content-center align-items-center">-->
-<!--                                                    <form class="text-center" action="#" th:action="@{/admin/delete}" th:method="post">-->
+<!--                                                    <form class="text-center" action="#"  th:method="post">-->
 <!--                                                        <label for="delid">ID</label>-->
-<!--                                                        <input class="form-control card-form" type="text" name="id" th:value="${userlist.id}"  id="delid" readonly>-->
+<!--                                                        <input class="form-control card-form" type="text" name="id"   id="delid" readonly>-->
 <!--                                                        <label for="delname">First name</label>-->
-<!--                                                        <input class="form-control alert-warning" type="text" name="name" th:value="${userlist.name}"  id="delname" readonly>-->
+<!--                                                        <input class="form-control alert-warning" type="text" name="name"  id="delname" readonly>-->
 <!--                                                        <label for="dellastName">Last name</label>-->
-<!--                                                        <input class="form-control alert-warning" type="text" name="lastName" th:value="${userlist.lastName}"  id="dellastName" readonly>-->
+<!--                                                        <input class="form-control alert-warning" type="text" name="lastName"  id="dellastName" readonly>-->
 <!--                                                        <label for="delage">Age</label>-->
-<!--                                                        <input class="form-control" type="text" name="age" th:value="${userlist.age}"  id="delage" readonly>-->
+<!--                                                        <input class="form-control" type="text" name="age"   id="delage" readonly>-->
 <!--                                                        <label for="delmail">Email</label>-->
-<!--                                                        <input class="form-control alert-warning" type="text" name="mail" th:value="${userlist.mail}"  id="delmail" readonly>-->
+<!--                                                        <input class="form-control alert-warning" type="text" name="mail"  id="delmail" readonly>-->
 <!--                                                        <label for="delpass">Password</label>-->
 <!--                                                        <input class="form-control" type="text" name="pass"  id="delpass" readonly>-->
 <!--                                                        <div class="pb-2">-->
@@ -163,10 +192,7 @@
 <!--                                                </div>-->
 <!--                                            </div>-->
 <!--                                        </div>-->
-<!--                                    </div>-->
 <!--                                </div>-->
-<!--                            </td>-->
-<!--                        </tr>-->
                     </tbody>
                 </table>
             </div>
