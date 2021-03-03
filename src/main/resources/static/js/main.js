@@ -72,9 +72,9 @@
     })
     let table = document.getElementById('example')
       $("#myModal .close").click()
-      while(table.rows.length > 1){
-          table.deleteRow(1);
-      }
-
-     setTimeout(createTable, 300)
+     //  while(table.rows.length > 1){
+     //      table.deleteRow(1);
+     //  }
+     //
+    // setTimeout(createTable, 300)
 };
