@@ -2,16 +2,10 @@ package ru.gasparov.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.gasparov.model.User;
 import ru.gasparov.service.UserService;
-import ru.gasparov.service.UtilService;
 
-import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -24,9 +18,24 @@ public class AdminController {
         this.userService = userService;
     }
 
+    @GetMapping(value = "/api/usersi")
+    public List<User> userListi() {
+        List<User> users = userService.allUser();
+        log.info("[REST.GET2]" + users.toString());
+        return users;
+    }
+
     @GetMapping(value = "/api/users")
     public List<User> userList() {
-        return userService.allUser();
+        List<User> users = userService.allUser();
+       log.info("[REST.GET]" + users.toString());
+       return users;
+    }
+
+    @GetMapping(value = "/api/findUser/{id}")
+    public User findUser(@PathVariable int id) {
+        log.info("[REST.GET]/api/findUser/" + id);
+        return userService.findUserById(id).get();
     }
 
     @GetMapping(value = "/admin/users/{id}")
