@@ -27,12 +27,9 @@
                     '<td>' + object.age + '</td>' +
                     '<td>' + object.mail + '</td>' +
                     '<td>' + roles + '</td>' +
-                    '<td>' + "<button id=\"editUser\" onclick=\"updateModal("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\"  >Edit</button>" + '</td>' +
-                     '<td>' + "<button type=\"button\" class=\"btn btn-danger btn-lg\" data-toggle=\"modal\">Delete</button>" + '</td>';
-                table.appendChild(tr);
-                $(".btn").click(function() {
-                    $("#myModal").modal('show');
-                });
+                    '<td>' + "<button id=\"editUser\" onclick=\"updateModal("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\" data-toggle=\"modal\" data-target=\"#myModal\" >Edit</button>" + '</td>' +
+                    '<td>' + "<button type=\"button\"onclick=\"updateModal("+object.id+")\"  class=\"btn btn-danger btn-lg\" data-toggle=\"modal\" data-target=\"#myModal2\">Delete</button>" + '</td>';
+                    table.appendChild(tr);
             })
         })
     });
@@ -47,14 +44,17 @@
             }
         }). then(result => {
             result.json().then(t => {
-
-                console.log(document.getElementById('example'));
-                console.log(document.getElementById('myModal'));
                 document.getElementById('id').value =  t.id;
                 document.getElementById('name').value =  t.name;
                 document.getElementById('lastName').value = t.lastName;
                 document.getElementById('age').value = t.age;
                 document.getElementById('mail').value = t.mail;
+
+                document.getElementById('idDel').value =  t.id;
+                document.getElementById('nameDel').value =  t.name;
+                document.getElementById('lastNameDel').value = t.lastName;
+                document.getElementById('ageDel').value = t.age;
+                document.getElementById('mailDel').value = t.mail;
             })
         });
 
@@ -76,29 +76,30 @@
         },
         body: JSON.stringify(user)
     })
-      $("#myModal .close").click()
-      console.log(document.getElementById('myModal'));
+      $("#myModal .close").click();
+      updateTable();
+
+};
+
+  function buttonDelete() {
+      fetch("http://localhost:8080/api/deleteUser/" + document.getElementById('idDel').value, {
+          method: 'DELETE',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+
+      })
+      $("#myModal2 .close").click();
+      updateTable();
+  }
+
+
+
+  function updateTable() {
       let table = document.getElementById('example')
       while(table.rows.length > 1){
           table.deleteRow(1);
       }
-      console.log(document.getElementById('myModal'));
-     createTable();
-
-};
-
-
-  // function updateTable() {
-  //
-
-  //     let tr = document.createElement('tr');
-  //     tr.innerHTML = '<td>' + object.id + '</td>' +
-  //         '<td>' + object.name + '</td>' +
-  //         '<td>' + object.lastName + '</td>' +
-  //         '<td>' + object.age + '</td>' +
-  //         '<td>' + object.mail + '</td>' +
-  //         '<td>' + roles + '</td>' +
-  //         '<td>' + "<button id=\"editUser\" onclick=\"updateModal("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\" data-toggle=\"modal\" data-target=\"#myModal\" >Edit</button>" + '</td>' +
-  //         '<td>' + "<button type=\"button\" class=\"btn btn-danger btn-lg\" data-toggle=\"modal\">Delete</button>" + '</td>';
-  //     table.appendChild(tr);
-  // }
+      setTimeout(createTable, 150)
+  }
