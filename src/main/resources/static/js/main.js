@@ -27,9 +27,12 @@
                     '<td>' + object.age + '</td>' +
                     '<td>' + object.mail + '</td>' +
                     '<td>' + roles + '</td>' +
-                    '<td>' + "<button id=\"editUser\" onclick=\"updateModal("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\" data-toggle=\"modal\" data-target=\"#myModal\" >Edit</button>" + '</td>' +
+                    '<td>' + "<button id=\"editUser\" onclick=\"updateModal("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\"  >Edit</button>" + '</td>' +
                      '<td>' + "<button type=\"button\" class=\"btn btn-danger btn-lg\" data-toggle=\"modal\">Delete</button>" + '</td>';
                 table.appendChild(tr);
+                $(".btn").click(function() {
+                    $("#myModal").modal('show');
+                });
             })
         })
     });
@@ -44,6 +47,9 @@
             }
         }). then(result => {
             result.json().then(t => {
+
+                console.log(document.getElementById('example'));
+                console.log(document.getElementById('myModal'));
                 document.getElementById('id').value =  t.id;
                 document.getElementById('name').value =  t.name;
                 document.getElementById('lastName').value = t.lastName;
@@ -70,11 +76,29 @@
         },
         body: JSON.stringify(user)
     })
-    let table = document.getElementById('example')
       $("#myModal .close").click()
-     //  while(table.rows.length > 1){
-     //      table.deleteRow(1);
-     //  }
-     //
-    // setTimeout(createTable, 300)
+      console.log(document.getElementById('myModal'));
+      let table = document.getElementById('example')
+      while(table.rows.length > 1){
+          table.deleteRow(1);
+      }
+      console.log(document.getElementById('myModal'));
+     createTable();
+
 };
+
+
+  // function updateTable() {
+  //
+
+  //     let tr = document.createElement('tr');
+  //     tr.innerHTML = '<td>' + object.id + '</td>' +
+  //         '<td>' + object.name + '</td>' +
+  //         '<td>' + object.lastName + '</td>' +
+  //         '<td>' + object.age + '</td>' +
+  //         '<td>' + object.mail + '</td>' +
+  //         '<td>' + roles + '</td>' +
+  //         '<td>' + "<button id=\"editUser\" onclick=\"updateModal("+object.id+")\" type=\"button\" class=\"btn btn-info btn-lg\" data-toggle=\"modal\" data-target=\"#myModal\" >Edit</button>" + '</td>' +
+  //         '<td>' + "<button type=\"button\" class=\"btn btn-danger btn-lg\" data-toggle=\"modal\">Delete</button>" + '</td>';
+  //     table.appendChild(tr);
+  // }
