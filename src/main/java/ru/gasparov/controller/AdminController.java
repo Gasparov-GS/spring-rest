@@ -62,5 +62,4 @@ public class AdminController {
         userService.addUser(user);
         log.info("[REST.PATCH]/api/editUser " + user.toString());
     }
-
 }

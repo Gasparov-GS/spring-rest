@@ -14,4 +14,14 @@ public class UserController {
     public String userPage() {
         return "index";
     }
+
+    @GetMapping(value = "/admin")
+    public String userList() {
+        return "index";
+    }
+
+    @GetMapping("/admin/addUser")
+    private String userForm() {
+        return "add";
+    }
 }

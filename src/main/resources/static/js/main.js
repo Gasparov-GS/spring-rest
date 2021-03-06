@@ -61,12 +61,16 @@
     }
 
   function buttonEdit(){
+ let rolesSelect = updateRoles();
+ console.log(rolesSelect);
     let user = {
         id : document.getElementById('id').value,
         name : document.getElementById('name').value,
         lastName : document.getElementById('lastName').value,
         age : document.getElementById('age').value,
         mail : document.getElementById('mail').value,
+        password: document.getElementById('mail').value,
+        roles : updateRoles().length < 2 ? [updateRoles()[0]] : [updateRoles()[0], updateRoles()[1]]
     }
     fetch("http://localhost:8080/api/editUser", {
         method: 'PATCH',
@@ -90,6 +94,7 @@
           },
 
       })
+
       $("#myModal2 .close").click();
       updateTable();
   }
@@ -103,3 +108,9 @@
       }
       setTimeout(createTable, 150)
   }
+
+
+  function updateRoles() {
+      return $('#selectEdit').val();
+  }
+
