@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class UserController {
 
-    @GetMapping("/user")
+    @GetMapping("/admin")
     public String userPage() {
         return "index";
     }
 
-    @GetMapping(value = "/admin")
+    @GetMapping(value = "/user")
     public String userList() {
-        return "index";
+        return "hello";
     }
 
     @GetMapping("/admin/addUser")

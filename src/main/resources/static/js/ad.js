@@ -1,10 +1,11 @@
-function addUser(){
+function addUser() {
     console.log(updateRoles())
     let newUser = {
         name: document.getElementById('name').value,
         lastName: document.getElementById('lastName').value,
         age: document.getElementById('age').value,
-        mail: document.getElementById('pass').value,
+        mail: document.getElementById('mail').value,
+        password: document.getElementById('pass').value,
         roles: updateRoles().length < 2 ? [updateRoles()[0]] : [updateRoles()[0], updateRoles()[1]]
     }
     fetch("http://localhost:8080/api/addUser", {
@@ -14,7 +15,9 @@ function addUser(){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(newUser),
-    }).then(()=> {window.location.href = "/admin"})
+    }).then(() => {
+        window.location.href = "/admin"
+    })
 }
 
 function updateRoles() {
